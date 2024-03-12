@@ -37,13 +37,14 @@ async def try_get(message: Message, state: FSMContext):
 Автор: {letter['author'] if not letter['author'] is None else 'Неизвестен'}""", parse_mode=ParseMode.HTML)
 
     except InvalidToken:
-        await state.set_state(ReadLetter.token)
+        await state.clear()
         await message.answer('Неверный токен или письмо уже было прочитано.')
 
     except WrongPassword:
-        await state.set_state(ReadLetter.token)
+        await state.clear()
         await message.answer("Неверный токен или пароль.")
 
     except NoneConnection:
+        await state.clear()
         await message.answer("Отсутсвует подключение к серверу...")
 
